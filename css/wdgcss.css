@@ -1,0 +1,21 @@
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.flex { display: flex; }
+.jus-center { justify-content: center; }
+.jus-between { justify-content: space-between; }
+.ali-center { align-items: center; }
+.dir-column { flex-direction: column; }
+
+h1.header-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
