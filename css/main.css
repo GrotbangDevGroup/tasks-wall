@@ -1,7 +1,8 @@
 #toolbar {
     border-radius: .5em;
-    border: 1px solid #000;
-    min-width: 400px;
+    border: 1px solid #376573;
+    min-width: 200px;
+    background: radial-gradient(#3288a4, #376573);
 }
 .toolbar-action-button {
     border-radius: 50%;
@@ -14,11 +15,47 @@
     display: grid;
 }
 
+.page-header {
+    margin-bottom: 1rem;
+}
+
+.task-card {
+    display: flex;
+    border: 1px solid #000;
+    border-radius: .5em;
+}
+.card-title-container {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-title {
+    margin: auto;
+}
+
+.task-dialog {
+    min-width: 90vw;
+    min-height: 60vh;
+    margin: auto;
+    border-radius: .5em;
+}
+
+.task-card-dialog::backdrop {
+    background-color: rgba(128, 128, 128, 0.322);
+}
+
 @media (min-width: 1024px) {
     #tasks-wall {
         min-height: 980px;
         height: 100vh;
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: repeat(6, 1fr);
+    }
+    .task-dialog {
+        min-width: 580px;
+        min-height: 480px;
+        margin: 10vh auto 0;
     }
 }
