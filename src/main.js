@@ -1,7 +1,12 @@
+import { addElement, addElementWithClass } from './wdgjs.js';
+import {Task, taskCard, taskCardTitle} from './lib.js';
+
 const toolbar = document.querySelector("#toolbar");
 const tasksWall = document.querySelector("#tasks-wall");
 
-function AddToolbarAction(title, action) {
+const tasks_array = new Array();
+
+function addToolbarAction(title, action) {
     const toolbarAction = document.createElement("button");
     toolbarAction.classList.add("toolbar-action-button");
     toolbarAction.innerHTML += title;
@@ -10,44 +15,40 @@ function AddToolbarAction(title, action) {
     return toolbarAction;
 }
 
-class Task {
-    title = "New Task";
-    element;
-    titleElement;
-    titleInputElement;
-
-    constructor() {
-        const taskElement = document.createElement("div");
-        const taskTitle = document.createElement("h2");
-        taskTitle.classList.add("task-title");
-        taskTitle.innerHTML += this.title;
-        const taskTitleInput = document.createElement("input");
-        taskElement.appendChild(taskTitle);
-
-        taskTitle.addEventListener('click', () => {
-            this.changeTaskTitle();
-        });
-        
-        this.element = taskElement;
-        this.titleElement = taskTitle;
-        this.titleInputElement = taskTitleInput;
+function tasksRender() {
+    if (tasksWall.hasChildNodes()) {
+        tasksWall.innerHTML = "";
     }
-
-    changeTaskTitle = () => {
-        const title = this.titleElement.innerText;
-        this.element.removeChild(this.titleElement);
-        this.element.appendChild(this.titleInputElement);
-    }
-    
+    tasks_array.forEach( e => {
+        const task_card = taskCard(e);
+        tasksWall.appendChild(task_card);
+    });
+    console.table(tasks_array);
 }
 
-tasksWall.appendChild(new Task().element);
-tasksWall.appendChild(new Task().element);
-tasksWall.appendChild(new Task().element);
+function taskDialog(Task) {
+    const dialog = addElementWithClass("dialog", document.documentElement, false, "task-dialog");
+    const title = taskCardTitle(Task);
+    dialog.appendChild(title);
+    const create_button = addElement("button", dialog, true);
+    create_button.innerHTML = "Create";
 
+    create_button.addEventListener('click', () => {
+        tasks_array.push(Task);
+        dialog.close();
+        tasksRender();
+    });
 
-const actionAdd = () => {
+    dialog.addEventListener('close', (event) => {
+        const task_dialog = document.querySelector(".task-dialog");
+        if (task_dialog) {
+            document.documentElement.removeChild(dialog);
+        }
+    });
 
+    dialog.showModal();
 }
 
-const addActionButton = AddToolbarAction("Add", ()=>{hello()});
+const addActionButton = addToolbarAction("Add", ()=> {
+    taskDialog(new Task());
+});
